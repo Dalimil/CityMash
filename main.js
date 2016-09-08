@@ -32,6 +32,16 @@ app.get('/', function(req, res) {
 	);
 });
 
+app.get('/play', function(req, res) {
+	//
+	res.render('play');
+});
+
+app.get('/browse', function(req, res) {
+	//
+	res.render('browse');
+});
+
 /* Specify both GET and POST endpoint */
 app.route('/debug') 
 	.get(function(req, res) {

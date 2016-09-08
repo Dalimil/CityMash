@@ -1,0 +1,40 @@
+{
+  "name": "city-mash",
+  "version": "1.0.0",
+  "description": "Web app that helps you explore cities and find travel destinations",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dalimil/CityMash.git"
+  },
+  "keywords": [
+    "travel",
+    "cities",
+    "city",
+    "explore",
+    "discover",
+    "hotels"
+  ],
+  "author": "Dalimil Hajek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dalimil/CityMash/issues"
+  },
+  "homepage": "https://github.com/Dalimil/CityMash#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookies": "*",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "pug": "^0.1.0",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "localtunnel": "^1.8.1",
+    "nodemon": "^1.10.2"
+  }
+}

@@ -5,31 +5,49 @@ block scripts
 
 block content
 	div.container
+		div.text-center(style="position: absolute; z-index: -1; top: 0; left: 0; margin: 1em auto; text-align: center; width: 100%;")
+			<span style="font-weight: bold; font-size: 2em; color: #eee;">A or B</span>
+
 		div(style="margin: 1em 0;")
 			<a href="/" class="btn btn-circle btn-primary"><i class="fa fa-home" aria-hidden="true"></i></a>
 			
-			<a href="javascript:void(0)" onclick="refresh()" class="btn btn-circle btn-primary" style="float: right"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+			<a href="javascript:void(0)" onclick="refresh('both')" class="btn btn-circle btn-primary" style="float: right"><i class="fa fa-refresh" aria-hidden="true"></i></a>
 
 		div.modal-body.row
-			div.col-xs-6
+			div.col-xs-6(style="border-right: 2px solid #555;")
 				div#galleryA
 					- for (var i=0; i< 3; i++) {
 						div.row
-							a(href="javascript:void(0)", id="img-full-A-"+(i))
-								div.col-xs-6
-									div.image-block(id="img-thumb-A-"+(i))
+							a(href="javascript:void(0)", id="img-full-A"+(i))
+								div.col-xs-12.col-padded
+									div.image-block(id="img-thumb-A"+(i))
 							
 					- }
 
 				div.text-center(style="margin: 2em auto; text-align: center; width: 100%;")
-					<a href="javascript:void(0)" onclick="saveFav()" class="btn btn-circle-2 btn-primary" style="margin: 0 0.5em;"><i id="fav-btn" class="fa fa-heart-o" aria-hidden="true"></i></a>
-					<a href="javascript:void(0)" onclick="onNextA();" style="margin: 0 0.5em;" class="btn btn-circle-2 btn-primary"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+					<a href="javascript:void(0)" onclick="saveFav('A')" class="btn btn-circle-2 btn-primary" style="margin: 0 0.5em;"><i id="fav-btnA" class="fa fa-heart-o" aria-hidden="true"></i></a>
+					<a href="javascript:void(0)" onclick="onNext('A');" style="margin: 0 0.5em;" class="btn btn-circle-2 btn-primary"><i class="fa fa-times" aria-hidden="true"></i></a>
 			div.col-xs-6
+				div#galleryB
+					- for (var i=0; i< 3; i++) {
+						div.row
+							a(href="javascript:void(0)", id="img-full-B"+(i))
+								div.col-xs-12.col-padded
+									div.image-block(id="img-thumb-B"+(i))
+							
+					- }
+
+				div.text-center(style="margin: 2em auto; text-align: center; width: 100%;")
+					<a href="javascript:void(0)" onclick="saveFav('B')" class="btn btn-circle-2 btn-primary" style="margin: 0 0.5em;"><i id="fav-btnB" class="fa fa-heart-o" aria-hidden="true"></i></a>
+					<a href="javascript:void(0)" onclick="onNext('B');" style="margin: 0 0.5em;" class="btn btn-circle-2 btn-primary"><i class="fa fa-times" aria-hidden="true"></i></a>
+
 				
 
 		script.
-			var current = null;
+			var currentA = null;
+			var currentB = null;
 
 			$(function() {
-				//loadCity();
+				loadCity('A');
+				loadCity('B');
 			});

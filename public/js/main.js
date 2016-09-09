@@ -1,7 +1,19 @@
 console.log("Welcome to your web application's JavaScript!");
 
-function saveFav() {
-	var fbtn = $('#fav-btn');
+function saveFav(A) {
+	var myName;
+	if(A == undefined){
+		A = "";
+		myName = current.name;
+	} else {
+		if(A == 'A')
+			myName = currentA.name;
+		else 
+			myName = currentB.name;
+	}
+
+
+	var fbtn = $('#fav-btn'+A);
 	var add = true;
 	if(fbtn.hasClass('fa-heart-o')){
 		fbtn.removeClass('fa-heart-o').addClass('fa-heart');
@@ -9,21 +21,29 @@ function saveFav() {
 		add = false;
 		fbtn.removeClass('fa-heart').addClass('fa-heart-o');
 	}
-	$.post("/fav", { add: add, name: current.name });
+
+	$.post("/fav", { add: add, name: myName });
 }
 
-function refresh() {
-	$.get("/refresh", function(data) {
-		fillView(data);
-	});
+function refresh(both) {
+	if(both == 'both') {
+		$.get("/refresh?m=" + currentA.id, function(data) {
+			fillView(data, 'A');
+		});
+		$.get("/refresh?m=" + currentB.id, function(data) {
+			fillView(data, 'B');
+		});
+	} else {
+		$.get("/refresh?m=" + current.id, function(data) {
+			fillView(data);
+		});
+	}
 }
 
-function fadeAndSlide() {
-	$("#gallery").fadeOut("fast").animate({
-		left: '100vw'
-	}, 0).fadeIn(0).animate({
-		left: '0'
-	}, "fast");
+function fadeAndSlide(A) {
+	if(A == undefined) A = "";
+
+	$("#gallery" + A).fadeOut("fast").fadeIn("fast");
 }
 
 function slideAndSlide() {
@@ -36,30 +56,45 @@ function slideAndSlide() {
 	}, "fast");
 }
 
-function onNext() {
-	slideAndSlide();
-	loadCity();
+function onNext(A) {
+	
+	if(A != undefined) {
+		fadeAndSlide(A);
+		loadCity(A);
+	} else {
+		slideAndSlide();
+		loadCity();
+	}
 }
 
 function fillView(data, A) {
-	if(A == undefined) A = "";
-	
-	current = data;
+	if(A == undefined){
+		A = "";
+		current = data;
+	} else {
+		if(A == 'A')
+			currentA = data;
+		else 
+			currentB = data;
+	}
+
 	console.log(data);
-	$("#loc-name").text(data.name);
+	if(A == ""){
+		$("#loc-name").text(data.name);
+	}
 	data.img.forEach(function(url, ind) {
-		$("#img-thumb-"+ ind).css("background-image", "url('" + (url.small) + "'");
-		$("#img-full-" + ind).attr("href", (url.big));
+		$("#img-thumb-"+A+ ind).css("background-image", "url('" + (url.small) + "'");
+		$("#img-full-" +A+ ind).attr("href", (url.big));
 	});
 
 	if(data.favedBefore) {
-		$('#fav-btn').removeClass('fa-heart-o').addClass('fa-heart');
+		$('#fav-btn'+A).removeClass('fa-heart-o').addClass('fa-heart');
 	} else {
-		$('#fav-btn').removeClass('fa-heart').addClass('fa-heart-o');
+		$('#fav-btn'+A).removeClass('fa-heart').addClass('fa-heart-o');
 	}
 
 	$('.poptrox-overlay').remove();
-	var gallery = $('#gallery');
+	var gallery = $('#gallery'+A);
 	gallery.poptrox();
 }
 

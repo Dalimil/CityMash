@@ -77,6 +77,7 @@ app.get('/city', function(req, res) {
 
 	let city = cities[nxtIndex];
 	city.img = chooseRandom(cityImages[city.name], 9, 6);
+	city.id = nxtIndex;
 	let favs = session.getFav(req.cookies);
 	city.favedBefore = (favs[city.name] != undefined);
 	res.json(city);
@@ -89,9 +90,13 @@ app.post('/fav', function(req, res) {
 
 app.get('/refresh', function(req, res) {
 	let seen = session.getSeen(req.cookies);
-	
-	let city = cities[seen[seen.length -1]];
+	console.log(req.query);
+	let id = req.query.m;
+
+	let city = cities[id];
+	console.log(id);
 	city.img = chooseRandom(cityImages[city.name], 9, 6);
+	city.id = id;
 	let favs = session.getFav(req.cookies);
 	city.favedBefore = (favs[city.name] != undefined);
 	res.json(city);

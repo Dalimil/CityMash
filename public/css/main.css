@@ -236,8 +236,18 @@ footer {
 .col-xs-6 {
     padding: 5px;
 }
+.col-padded {
+    padding: 5px;
+}
 
 #gallery {
     position: relative;
     right: 0;
+}
+#galleryA {
+    padding-right: 1em;
+}
+
+#galleryB {
+    padding-left: 1em;
 }

@@ -95,7 +95,7 @@ function fillView(data, A) {
 
 	$('.poptrox-overlay').remove();
 	var gallery = $('#gallery'+A);
-	gallery.poptrox();
+	gallery.poptrox( { windowMargin: 5 });
 }
 
 function loadCity(A) {

@@ -47,7 +47,10 @@ app.get('/', function(req, res) {
 	// res.sendFile( __dirname + "/" + "index.html" );
 	// Now render .pug template with any JSON locals/variables:
 	session.init(req.cookies);
-	res.render('index', { favs: session.getFav(req.cookies) } );
+	console.log("-");
+	let favs = session.getFav(req.cookies);
+	console.log(favs);
+	res.render('index', { favs:  favs } );
 });
 
 app.get('/play', function(req, res) {

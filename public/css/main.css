@@ -210,3 +210,22 @@ footer {
   bottom: 5px;
   right: 5px;
 }
+.image-block {
+    height: 100%;
+}
+
+.btn-circle {
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  font-size: 1.7em;
+  border-radius: 1.5em;
+}
+
+.btn-circle-2 {
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  font-size: 2em;
+  border-radius: 2em;
+}

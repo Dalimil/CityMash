@@ -1,6 +1,81 @@
 extends layout
 
-block content
+block scripts
+	link(rel='stylesheet', href='/static/css/game.css')
 
-	p.
-		This is the browse screen
+block content
+	div.container
+		div.text-center(style="position: absolute; z-index: -1; top: 0; left: 0; margin: 1em auto; text-align: center; width: 100%;")
+			<span id="loc-name" style="font-weight: bold; font-size: 2em; color: #eee;"></span>
+
+		div(style="margin: 1em 0;")
+			<a href="/" class="btn btn-circle btn-primary"><i class="fa fa-home" aria-hidden="true"></i></a>
+			
+			<a href="javascript:void(0)" onclick="refresh()" class="btn btn-circle btn-primary" style="float: right"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+
+		div#gallery
+			- for (var i=0; i< 3; i++) {
+				div.row
+					- for (var j=0; j< 2; j++) {
+						div.col-xs-6.image-block
+							a.thumbnail(href="javascript:void(0)", id="img-full-"+(i*2+j))
+								img(id="img-thumb-"+(i*2+j))
+					- }
+			- }
+
+		div.text-center(style="position: fixed; bottom: 0; margin: 2em auto; text-align: center; width: 100%; left: 0")
+			<a href="javascript:void(0)" onclick="saveFav()" class="btn btn-circle-2 btn-primary" style="margin: 0 0.5em;"><i id="fav-btn" class="fa fa-heart-o" aria-hidden="true"></i></a>
+			<a href="javascript:void(0)" onclick="onNext();" style="margin: 0 0.5em;" class="btn btn-circle-2 btn-primary"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+
+		script.
+			var current = null;
+
+			function saveFav() {
+				var fbtn = $('#fav-btn');
+				var add = true;
+				if(fbtn.hasClass('fa-heart-o')){
+					fbtn.removeClass('fa-heart-o').addClass('fa-heart');
+				} else {
+					add = false;
+					fbtn.removeClass('fa-heart').addClass('fa-heart-o');
+				}
+				$.post("/fav", { add: add, name: current.name });
+			}
+
+			function refresh() {
+				$.get("/refresh", function(data) {
+					fillView(data);
+				});
+			}
+
+			function onNext() {
+				loadCity();
+			}
+
+			function fillView(data) {
+				current = data;
+				console.log(data);
+				$("#loc-name").text(data.name);
+				data.img.forEach(function(url, ind) {
+					$("#img-thumb-"+ ind).attr("src", (url.small));
+					$("#img-full-" + ind).attr("href", (url.big));
+				});
+
+				$('#fav-btn').removeClass('fa-heart').addClass('fa-heart-o');
+
+				$('.poptrox-overlay').remove();
+				var gallery = $('#gallery');
+				gallery.poptrox();
+			}
+
+			function loadCity() {
+				$.get("/city", function(data) {
+					fillView(data);
+				});
+
+				
+			}
+
+			$(function() {
+				loadCity();
+			});

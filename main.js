@@ -48,7 +48,7 @@ app.get('/', function(req, res) {
 	// Now render .pug template with any JSON locals/variables:
 	session.init(req.cookies);
 	console.log("-");
-	let favs = session.getFav(req.cookies);
+	let favs = session.getFav(req.cookies) || {};
 	console.log(favs);
 	res.render('index', { favs:  favs } );
 });

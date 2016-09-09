@@ -44,7 +44,8 @@ block content
                         - Object.keys(favs).filter(function(x) { return favs[x] == "true"; }).forEach(function(favKey) {
                             li.list-group-item(style="text-align: left")
                                 span(style="font-weight: bold;")= favKey
-                                button.btn.btn-xs.pull-right(style="color: #eee; background-color: #1F496E").
+                                button.btn.btn-xs.pull-right(style="color: #eee; background-color: #1F496E",
+                                    onclick="location.href='http://hotels.com/search.do?q-destination=" + favKey +"&q-rooms=1&q-room-0-adults=1&q-room-0-children=0';").
                                     <i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;&nbsp;Find Hotels
 
                         - });

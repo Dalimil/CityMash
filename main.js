@@ -55,7 +55,7 @@ app.get('/', function(req, res) {
 
 app.get('/play', function(req, res) {
 	session.clear(req.cookies);
-	res.render('browse');
+	res.render('play');
 });
 
 app.get('/browse', function(req, res) {

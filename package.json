@@ -4,8 +4,8 @@
   "description": "Web app that helps you explore cities and find travel destinations",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node main.js",
+    "test": "nodemon main.js"
   },
   "repository": {
     "type": "git",

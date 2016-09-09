@@ -17,9 +17,9 @@ block content
 			- for (var i=0; i< 3; i++) {
 				div.row
 					- for (var j=0; j< 2; j++) {
-						div.col-xs-6.image-block
-							a.thumbnail(href="javascript:void(0)", id="img-full-"+(i*2+j))
-								img(id="img-thumb-"+(i*2+j))
+						a(href="javascript:void(0)", id="img-full-"+(i*2+j))
+							div.col-xs-6
+								div.image-block(id="img-thumb-"+(i*2+j))
 					- }
 			- }
 
@@ -48,7 +48,26 @@ block content
 				});
 			}
 
+			function fadeAndSlide() {
+				$("#gallery").fadeOut("fast").animate({
+					left: '100vw'
+				}, 0).fadeIn(0).animate({
+					left: '0'
+				}, "fast");
+			}
+
+			function slideAndSlide() {
+				$("#gallery").animate({
+					left: '-100vw'
+				}, "fast").animate({
+					left: '100vw'
+				}, 0).animate({
+					left: '0'
+				}, "fast");
+			}
+
 			function onNext() {
+				slideAndSlide();
 				loadCity();
 			}
 
@@ -57,11 +76,15 @@ block content
 				console.log(data);
 				$("#loc-name").text(data.name);
 				data.img.forEach(function(url, ind) {
-					$("#img-thumb-"+ ind).attr("src", (url.small));
+					$("#img-thumb-"+ ind).css("background-image", "url('" + (url.small) + "'");
 					$("#img-full-" + ind).attr("href", (url.big));
 				});
 
-				$('#fav-btn').removeClass('fa-heart').addClass('fa-heart-o');
+				if(data.favedBefore) {
+					$('#fav-btn').removeClass('fa-heart-o').addClass('fa-heart');
+				} else {
+					$('#fav-btn').removeClass('fa-heart').addClass('fa-heart-o');
+				}
 
 				$('.poptrox-overlay').remove();
 				var gallery = $('#gallery');
@@ -70,9 +93,9 @@ block content
 
 			function loadCity() {
 				$.get("/city", function(data) {
+
 					fillView(data);
 				});
-
 				
 			}
 
